@@ -82,8 +82,8 @@
 		07E1A5F724ADDD92004240C3 = {
 			isa = PBXGroup;
 			children = (
+				07E1A8A924B34D54004240C3 /* Sources */,
 				07E1A60224ADDD92004240C3 /* WebScavenging */,
-				07E1A89224B33C51004240C3 /* Sources */,
 				07E1A60124ADDD92004240C3 /* Products */,
 				07E1A8A324B341D7004240C3 /* Frameworks */,
 			);
@@ -112,14 +112,14 @@
 			path = WebScavenging;
 			sourceTree = "<group>";
 		};
-		07E1A89224B33C51004240C3 /* Sources */ = {
+		07E1A89224B33C51004240C3 /* VaccineDataReader */ = {
 			isa = PBXGroup;
 			children = (
 				07E1A89324B33C51004240C3 /* VaccineData.h */,
 				07E1A89424B33C51004240C3 /* Info.plist */,
 				07E1A89E24B33CA2004240C3 /* Reader.swift */,
 			);
-			path = Sources;
+			path = VaccineDataReader;
 			sourceTree = "<group>";
 		};
 		07E1A8A324B341D7004240C3 /* Frameworks */ = {
@@ -127,6 +127,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		07E1A8A924B34D54004240C3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				07E1A89224B33C51004240C3 /* VaccineDataReader */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
