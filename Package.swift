@@ -1,12 +1,9 @@
 // swift-tools-version:5.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
 import PackageDescription
 
 let package = Package(
     name: "VaccineDataReader",
     platforms: [
-           // Add support for all platforms starting from a specific version.
         .iOS(.v12),
        ],
     products: [
@@ -20,6 +17,11 @@ let package = Package(
     targets: [
         .target(
             name: "VaccineDataReader",
-            dependencies: ["Kanna"])
+            dependencies: ["Kanna"],
+            exclude: [
+                "WebScavenging/*",
+                "Sources/VaccineDataReader/VaccineData.h"
+            ]
+        )
     ]
 )
