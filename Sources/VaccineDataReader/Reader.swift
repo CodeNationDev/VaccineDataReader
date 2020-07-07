@@ -35,7 +35,6 @@ public func loadScheduledVaccines() -> [Vaccine]? {
                 for item in element.css("tr") {
                     if let data = item.content?.split(separator: "\n"), let first =
                         data.first {
-                        print(data)
                         var vaccine = Vaccine()
                         var auxAges:[ages] = []
                         vaccine.name = first.trimmingCharacters(in: .whitespacesAndNewlines)
