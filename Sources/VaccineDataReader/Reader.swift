@@ -90,5 +90,6 @@ public func loadScheduledVaccines() -> [Vaccine]? {
             }
         }
     }
+    if table.count > 0 { table.remove(at: 0) }
     return table
 }
