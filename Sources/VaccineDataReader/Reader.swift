@@ -6,7 +6,6 @@ private var table:[Vaccine] = []
 
 public struct Vaccine {
     var name: String?
-    var age: [ages]?
     var shortname: String?
 }
 
@@ -23,8 +22,53 @@ public enum ages: String, Codable {
     _14a = "14a"
 }
 
-public func loadScheduledVaccines() -> [Vaccine]? {
-    let myURLString = "https://vacunasaep.org/profesionales/calendario-vacunas/castilla-la-mancha"
+public enum CCAA {
+    case madrid,
+    clamancha,
+    andalucia,
+    aragon,
+    asturias,
+    cyleon,
+    cat,
+    ceuta,
+    extremadura,
+    galicia,
+    baleares,
+    canarias,
+    larioja,
+    melilla,
+    murcia,
+    navarra,
+    paisvasco,
+    valencia
+    
+    public var url: String {
+        let urlbase = "https://vacunasaep.org/profesionales/calendario-vacunas/"
+        switch self {
+        case .madrid: return urlbase + "madrid"
+        case .clamancha: return urlbase + "castilla-la-mancha"
+        case .andalucia: return urlbase + "andalucía"
+        case .aragon: return urlbase + "aragón"
+        case .asturias: return urlbase + "asturias"
+        case .cyleon: return urlbase + "castilla-y-león"
+        case .cat: return urlbase + "cataluña"
+        case .ceuta: return urlbase + "ceuta"
+        case .extremadura: return urlbase + "extremadura"
+        case .galicia: return urlbase + "galicia"
+        case .baleares: return urlbase + "islas-baleares"
+        case .canarias: return urlbase + "islas-canarias"
+        case .larioja: return urlbase + "la-rioja"
+        case .melilla: return urlbase + "melilla"
+        case .murcia: return urlbase + "murcia"
+        case .navarra: return urlbase + "navarra"
+        case .paisvasco: return urlbase + "país-vasco"
+        case .valencia: return urlbase + "navarra"
+        }
+    }
+}
+
+public func loadScheduledVaccines(ccaa: CCAA) -> [Vaccine]? {
+    let myURLString = ccaa.url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) ?? ""
     guard let myURL = URL(string: myURLString) else {
         print("Error: \(myURLString) doesn't seem to be a valid URL")
         return nil
@@ -36,53 +80,12 @@ public func loadScheduledVaccines() -> [Vaccine]? {
                     if let data = item.content?.split(separator: "\n"), let first =
                         data.first {
                         var vaccine = Vaccine()
-                        var auxAges:[ages] = []
                         vaccine.name = first.trimmingCharacters(in: .whitespacesAndNewlines)
-                        if data.count >= 10 {
-                            if !data[1].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._2m)
-                                vaccine.shortname = data[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                                
-                            }
-                            if !data[2].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._4m)
-                                vaccine.shortname = data[2].trimmingCharacters(in: .whitespacesAndNewlines)
-                                vaccine.shortname = data[2].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[3].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._11m)
-                                vaccine.shortname = data[3].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[4].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._12m)
-                                vaccine.shortname = data[4].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[5].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._15m)
-                                vaccine.shortname = data[5].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[6].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._24m)
-                                vaccine.shortname = data[6].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[7].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._3a)
-                                vaccine.shortname = data[7].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[8].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._6a)
-                                vaccine.shortname = data[8].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if !data[9].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._12a)
-                                vaccine.shortname = data[9].trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                            if data.count > 10 && !data[10].trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
-                                auxAges.append(._14a)
-                                vaccine.shortname = data[10].trimmingCharacters(in: .whitespacesAndNewlines)
+                        data.forEach {
+                            if !$0.trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual("") {
+                                vaccine.shortname = $0.trimmingCharacters(in: .whitespacesAndNewlines)
                             }
                         }
-                        vaccine.age = auxAges
                         table.append(vaccine)
                     }
                 }

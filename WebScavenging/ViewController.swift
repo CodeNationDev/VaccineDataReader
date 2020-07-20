@@ -6,8 +6,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(loadScheduledVaccines())
+        print(loadScheduledVaccines(ccaa: .paisvasco))
     }
-
 }
 
